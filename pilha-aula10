@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#define MAX_SIZE 100
+
+typedef struct {
+	int items [MAX_SIZE];
+	int top;
+} Pilha;
+
+// Inicializa a pilha
+void inicializa(Pilha *pilha) {
+	pilha->top = -1;
+}
+
+// Verifica se a plha esta vazia
+int estaVazia(Pilha *pilha) {
+	return pilha->top == -1;
+}
+
+// Verifica se a pilha esta cheia
+int estaCheia(Pilha *pilha) {
+	return pilha->top == MAX_SIZE -1;
+}
+
+// Insere um elemento no topo da pilha
+void inseri(Pilha *pilha, int data) {
+	if (estaCheia(pilha)) {
+		printf("A pilha esta cheia.\n");
+	}else {
+		pilha->items[++pilha->top] = data;
+	}
+}
+
+// Remove e retonra o elemento do topo da pilha
+int apagar(Pilha *pilha){
+	if (estaVazia(pilha)) {
+		printf("A pilha esta vazia.\n");
+	}else {
+		return pilha->items[pilha->top--];
+	}
+}
+
+int main() {
+	Pilha pilha;
+	inicializa(&pilha);
+	
+	inseri(&pilha, 1);
+	inseri(&pilha, 2);
+	inseri(&pilha, 3);
+	
+	printf("Elemento removido: %d\n", apagar(&pilha));
+	printf("Elemento removido: %d\n", apagar(&pilha));
+
+	return 0;
+}
