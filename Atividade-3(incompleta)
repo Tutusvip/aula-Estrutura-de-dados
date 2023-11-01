@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+#inlcude <string.h>
+
+typedef struct
+{
+	int classificacao;
+	char nome[50], genero[50], diretor[50], duracao[50];
+} filme;
+
+void setfilme(filme *F, char *nome, char *genero, char*diretor, char*duracao, int classificacao){
+	strcpy(F->nome, nome);
+	strcpy(F->genero, genero);
+	strcpy(F->diretor, diretor);
+	strcpy(F->duracao, duracao);
+	F ->classificacao  - classificacao;
+}
+
+void imprimefilme(filme F){
+	printf("\n\nNome: %s\nGenero: %s\nDiretor: %s\nDuracao: %s\nClassificacao: %d\n\n\n\n", F.nome,F.genero,F.diretor,F.duracao,F.classificacao);
+}
+void main(){
+	filme starsiars;
+	
+	setfilme(%starsiars, "Star Wars", "avatar", "Kuka", "Freira", 12);
+	imprimefilme(starsiars);
+}
