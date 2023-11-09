@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_SIZE 100
+
+typedef struct {
+    char nome[20];
+} Peca;
+
+typedef struct {
+	int items[MAX_SIZE];
+	int inicio, fim;
+}Fila;
+
+// Inicializa a fila
+void inicializar(Fila *fila, Peca peca){
+	fila->inicio = -1;
+	fila->fim = -1;
+}
+
+// Verifica se a fila está vazia
+int estaCheia(Fila *fila){
+	return (fila->fim== +1) % MAX_SIZE == fila->inicio;
+}
+
+// Verifica se a fila está vazia
+int estaVazia(Fila *fila){
+	return (fila->inicio== -1 && fila->fim == -1) || (fila->inicio > fila->fim);
+}
+
+// Insere um elemento no fim da fila
+void inserir(Fila *fila, int data) {
+	if (estaCheia(fila)) {
+		printf("A fila esta cheia.\n");
+	}else {
+		if (fila->inicio == -1) {
+			fila->inicio = 0;
+		}
+		fila->items[++fila->fim] = data;
+	}
+}
+
+// Remove e retorna o elemento no incio da fila
+int remover(Fila *fila) {
+	if (estaVazia(fila)){
+		printf("A fila esta vazia.\n");
+		return -1;
+	} else {
+		return fila->items[fila->inicio++];
+	}
+}
+
+int main() {
+	Fila fila;
+	inicializa(&fila);
+
+    char NomeP[30];
+    printf("Digite o nome: ");
+    scanf("%s", NomeP);
+
+    int quant;
+    printf("Quantas pessoas %s? ", quant);
+    scanf("%d", &quant);
+    
+    if (quant <= 0 || quant > MAX_SIZE) {
+    printf("Quantidade de pessoas inválida. O programa será encerrado.\n");
+    return 1;
+    }
+    
+     printf("Agora, digite os nomes das %d Pessaos:\n", quant);
+    for (int i = 0; i < quant; i++) {
+        Peca peca;
+        printf("Nome da pessoa %d: ", i + 1);
+        scanf("%s", peca.nome);
+        inserir(&fila, peca);
+    }
+
+    printf("Montando o objeto %s...\n", NomeP);
+
+    while (!estaVazia(&fila)) {
+        printf("Peça removida: %s\n", remover(&fila).nome);
+    }
+
+    printf("A fila %s foi feita com sucesso!\n", NomeP);
+
+    return 0;
+}
+    
+/*	inserir(&fila, 1);
+	inserir(&fila, 2);
+	inserir(&fila, 3);
+	
+	printf("Elemento removido: %\n", remover(&fila));
+	printf("Elemento removido: %\n", remover(&fila));
+	
+	return 0;*/
+	
+}
