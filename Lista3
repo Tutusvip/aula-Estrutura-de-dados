@@ -1,0 +1,155 @@
+1 Questão
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+  int data;
+  struct Node *next;
+};
+
+struct Node *criarNovoNo(int value) {
+  struct Node *novoNo = (struct Node *)malloc(sizeof(struct Node));
+  novoNo->data = value;
+  novoNo->next = NULL;
+  return novoNo;
+}
+
+void inserirListaOrdenada(struct Node **cabeca, int value) {
+  struct Node *novoNo = criarNovoNo(value);
+  struct Node *atual = *cabeca;
+  struct Node *anterior = NULL;
+
+  while (atual != NULL && atual->data < value) {
+    anterior = atual;
+    atual = atual->next;
+  }
+
+  if (anterior == NULL) {
+    novoNo->next = *cabeca;
+    *cabeca = novoNo;
+  } else {
+    anterior->next = novoNo;
+    novoNo->next = atual;
+  }
+}
+
+void imprimirLista(struct Node *cabeca) {
+  struct Node *atual = cabeca;
+
+  while (atual != NULL) {
+    printf("%d -> ", atual->data);
+    atual = atual->next;
+  }
+
+  printf("NULL\n");
+}
+
+void liberarLista(struct Node *cabeca) {
+  struct Node *atual = cabeca;
+
+  while (atual != NULL) {
+    struct Node *temp = atual;
+    atual = atual->next;
+    free(temp);
+  }
+}
+
+int main() {
+  struct Node *lista = NULL;
+  int tamanho;
+
+  printf("Digite o tamanho da lista: ");
+  scanf("%d", &tamanho);
+
+  for (int i = 0; i < tamanho; i++) {
+    int valor;
+    printf("Digite o valor %d: ", i + 1);
+    scanf("%d", &valor);
+    inserirListaOrdenada(&lista, valor);
+  }
+
+  printf("Lista ordenada: ");
+  imprimirLista(lista);
+  liberarLista(lista);
+
+  return 0;
+}
+--------------------------------------------------------------------------------------------------------------
+2 Questão
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct ItemCompra {
+  char nome[50];
+  struct ItemCompra *proximo;
+};
+
+struct ItemCompra *criarItemCompra(const char *nome) {
+  struct ItemCompra *novoItem = (struct ItemCompra *)malloc(sizeof(struct ItemCompra));
+  strcpy(novoItem->nome, nome);
+  novoItem->proximo = NULL;
+  return novoItem;
+}
+
+void inserirListaOrdenada(struct ItemCompra **cabeca, const char *nome) {
+  struct ItemCompra *novoItem = criarItemCompra(nome);
+  struct ItemCompra *atual = *cabeca;
+  struct ItemCompra *anterior = NULL;
+
+  while (atual != NULL && strcmp(atual->nome, nome) < 0) {
+    anterior = atual;
+    atual = atual->proximo;
+  }
+
+  if (anterior == NULL) {
+    novoItem->proximo = *cabeca;
+    *cabeca = novoItem;
+  } else {
+    anterior->proximo = novoItem;
+    novoItem->proximo = atual;
+  }
+}
+
+void imprimirLista(struct ItemCompra *cabeca) {
+  struct ItemCompra *atual = cabeca;
+  printf("Lista de Compras:\n");
+
+  while (atual != NULL) {
+    printf("%s\n", atual->nome);
+    atual = atual->proximo;
+  }
+}
+
+void liberarLista(struct ItemCompra *cabeca) {
+  struct ItemCompra *atual = cabeca;
+
+  while (atual != NULL) {
+    struct ItemCompra *temp = atual;
+    atual = atual->proximo;
+    free(temp);
+  }
+}
+
+int main() {
+  struct ItemCompra *listaCompras = NULL;
+  int tamanho;
+
+  printf("Digite o número de itens na lista de compras: ");
+  scanf("%d", &tamanho);
+
+  for (int i = 0; i < tamanho; i++) {
+    char nome[50];
+    printf("Digite o nome do item %d: ", i + 1);
+    scanf("%s", nome);
+    inserirListaOrdenada(&listaCompras, nome);
+  }
+
+  printf("\nLista de Compras Ordenada:\n");
+  imprimirLista(listaCompras);
+
+  liberarLista(listaCompras);
+  return 0;
+}
